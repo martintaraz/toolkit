@@ -6,6 +6,15 @@
 	<artifactId>toolkit</artifactId>
 	<version>5.1.1</version>
 
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/martintaraz/toolkit</url>
+		</repository>
+	</distributionManagement>
+
+	
 	<build>
 		<plugins>
 			<plugin>
