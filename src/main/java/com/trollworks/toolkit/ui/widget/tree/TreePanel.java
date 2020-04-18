@@ -11,23 +11,6 @@
 
 package com.trollworks.toolkit.ui.widget.tree;
 
-import com.trollworks.toolkit.io.Log;
-import com.trollworks.toolkit.ui.Colors;
-import com.trollworks.toolkit.ui.Fonts;
-import com.trollworks.toolkit.ui.GraphicsUtilities;
-import com.trollworks.toolkit.ui.TextDrawing;
-import com.trollworks.toolkit.ui.UIUtilities;
-import com.trollworks.toolkit.ui.image.StdImage;
-import com.trollworks.toolkit.ui.menu.edit.Deletable;
-import com.trollworks.toolkit.ui.menu.edit.Openable;
-import com.trollworks.toolkit.ui.menu.edit.SelectAllCapable;
-import com.trollworks.toolkit.ui.widget.DirectScrollPanel;
-import com.trollworks.toolkit.ui.widget.DirectScrollPanelArea;
-import com.trollworks.toolkit.ui.widget.dock.Dock;
-import com.trollworks.toolkit.ui.widget.dock.DockableTransferable;
-import com.trollworks.toolkit.utility.notification.NotifierTarget;
-import com.trollworks.toolkit.utility.task.Tasks;
-
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
@@ -66,9 +49,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
 import javax.swing.UIManager;
 
-import gnu.trove.map.hash.TObjectIntHashMap;
+import org.eclipse.collections.impl.map.mutable.primitive.ObjectIntHashMap;
+
+import com.trollworks.toolkit.io.Log;
+import com.trollworks.toolkit.ui.Colors;
+import com.trollworks.toolkit.ui.Fonts;
+import com.trollworks.toolkit.ui.GraphicsUtilities;
+import com.trollworks.toolkit.ui.TextDrawing;
+import com.trollworks.toolkit.ui.UIUtilities;
+import com.trollworks.toolkit.ui.image.StdImage;
+import com.trollworks.toolkit.ui.menu.edit.Deletable;
+import com.trollworks.toolkit.ui.menu.edit.Openable;
+import com.trollworks.toolkit.ui.menu.edit.SelectAllCapable;
+import com.trollworks.toolkit.ui.widget.DirectScrollPanel;
+import com.trollworks.toolkit.ui.widget.DirectScrollPanelArea;
+import com.trollworks.toolkit.ui.widget.dock.Dock;
+import com.trollworks.toolkit.ui.widget.dock.DockableTransferable;
+import com.trollworks.toolkit.utility.notification.NotifierTarget;
+import com.trollworks.toolkit.utility.task.Tasks;
 
 /** Provides a flexible tree widget. */
 public class TreePanel extends DirectScrollPanel implements Runnable, Openable, Deletable, SelectAllCapable, DropTargetListener, DragSourceListener, DragGestureListener, FocusListener, KeyListener, MouseListener, MouseMotionListener, NotifierTarget {
@@ -88,7 +89,7 @@ public class TreePanel extends DirectScrollPanel implements Runnable, Openable, 
     private              Color                      mHierarchyLineColor     = new Color(224, 224, 224);
     private              HashSet<TreeContainerRow>  mOpenRows               = new HashSet<>();
     private              HashSet<TreeRow>           mSelectedRows           = new HashSet<>();
-    private              TObjectIntHashMap<TreeRow> mRowHeightMap           = new TObjectIntHashMap<>();
+    private              ObjectIntHashMap<TreeRow> mRowHeightMap           = new ObjectIntHashMap<>();
     private              int                        mRowHeight              = TextTreeColumn.VMARGIN + TextDrawing.getFontHeight(Fonts.getDefaultFont()) + TextTreeColumn.VMARGIN;
     private              int                        mMouseOverColumnDivider = -1;
     private              int                        mDragColumnDivider      = -1;
@@ -669,7 +670,7 @@ public class TreePanel extends DirectScrollPanel implements Runnable, Openable, 
     /** @param row The {@link TreeRow} to invalidate the cached height of. */
     public void invalidateRowHeight(TreeRow row) {
         if (mRowHeight < 1) {
-            if (mRowHeightMap.remove(row) != 0) {
+            if (mRowHeightMap.keySet().remove(row)) {
                 notify(TreeNotificationKeys.ROW_HEIGHT, new TreeRow[]{row});
             }
         }
@@ -678,7 +679,7 @@ public class TreePanel extends DirectScrollPanel implements Runnable, Openable, 
     /** Invalidates the height of all {@link TreeRow}s. */
     public void invalidateAllRowHeights() {
         if (mRowHeight < 1) {
-            TreeRow[] rows = mRowHeightMap.keys(new TreeRow[mRowHeightMap.size()]);
+            TreeRow[] rows = mRowHeightMap.keySet().toArray(TreeRow[]::new);
             mRowHeightMap.clear();
             notify(TreeNotificationKeys.ROW_HEIGHT, rows);
         }

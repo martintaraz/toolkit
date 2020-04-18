@@ -12,7 +12,8 @@
 module com.trollworks.toolkit {
     requires java.management;
     requires java.prefs;
-    requires gnu.trove;
+    requires org.eclipse.collections.api;
+    requires org.eclipse.collections.impl;
 
     requires transitive java.datatransfer;
     requires transitive java.desktop;

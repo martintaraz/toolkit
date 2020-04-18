@@ -13,13 +13,13 @@ package com.trollworks.toolkit.io.xml;
 
 import java.util.HashMap;
 
-import gnu.trove.stack.TIntStack;
-import gnu.trove.stack.array.TIntArrayStack;
+import org.eclipse.collections.api.stack.primitive.MutableIntStack;
+import org.eclipse.collections.impl.stack.mutable.primitive.IntArrayStack;
 
 /** Provides temporary storage when loading an object from XML. */
 public class XmlParserContext extends HashMap<String, Object> {
     private XmlParser mParser;
-    private TIntStack mVersionStack = new TIntArrayStack();
+    private MutableIntStack mVersionStack = new IntArrayStack();
 
     /** @param parser The {@link XmlParser} being used. */
     public XmlParserContext(XmlParser parser) {

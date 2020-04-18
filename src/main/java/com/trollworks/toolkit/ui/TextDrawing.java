@@ -21,15 +21,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+
 import javax.swing.SwingConstants;
 
-import gnu.trove.map.hash.TIntIntHashMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
+import org.eclipse.collections.impl.map.mutable.primitive.IntIntHashMap;
+import org.eclipse.collections.impl.map.mutable.primitive.ObjectIntHashMap;
 
 /** General text drawing utilities. */
 public class TextDrawing {
-    private static       HashMap<Font, TIntIntHashMap> WIDTH_MAP  = new HashMap<>();
-    private static       TObjectIntHashMap<Font>       HEIGHT_MAP = new TObjectIntHashMap<>();
+    private static       HashMap<Font, IntIntHashMap> WIDTH_MAP  = new HashMap<>();
+    private static       ObjectIntHashMap<Font>       HEIGHT_MAP = new ObjectIntHashMap<>();
     private static final String                        SPACE      = " ";
     private static final String                        NEWLINE    = "\n";
     private static final char                          ELLIPSIS   = '\u2026';
@@ -43,7 +44,7 @@ public class TextDrawing {
         return getCharWidth(font, ch, getWidthMap(font));
     }
 
-    private static int getCharWidth(Font font, char ch, TIntIntHashMap map) {
+    private static int getCharWidth(Font font, char ch, IntIntHashMap map) {
         int width = map.get(ch);
         if (width == 0) {
             width = Fonts.getFontMetrics(font).charWidth(ch);
@@ -61,7 +62,7 @@ public class TextDrawing {
      * @return The width, in pixels.
      */
     public static final int getSimpleWidth(Font font, String text) {
-        TIntIntHashMap map   = getWidthMap(font);
+        IntIntHashMap map   = getWidthMap(font);
         int            total = 0;
         int            count = text.length();
         for (int i = 0; i < count; i++) {
@@ -70,10 +71,10 @@ public class TextDrawing {
         return total;
     }
 
-    private static TIntIntHashMap getWidthMap(Font font) {
-        TIntIntHashMap map = WIDTH_MAP.get(font);
+    private static IntIntHashMap getWidthMap(Font font) {
+        IntIntHashMap map = WIDTH_MAP.get(font);
         if (map == null) {
-            map = new TIntIntHashMap();
+            map = new IntIntHashMap();
             WIDTH_MAP.put(font, map);
             FontMetrics fm = Fonts.getFontMetrics(font);
             for (int i = 32; i < 127; i++) {
@@ -194,7 +195,7 @@ public class TextDrawing {
         int height = 0;
         int length = text.length();
         if (length > 0) {
-            TIntIntHashMap map      = getWidthMap(font);
+            IntIntHashMap map      = getWidthMap(font);
             int            fHeight  = getFontHeight(font);
             char           ch       = 0;
             int            curWidth = 0;

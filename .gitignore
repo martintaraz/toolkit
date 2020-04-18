@@ -1,1 +1,4 @@
-/antbuild
+.classpath
+.project
+.settings
+/target/
