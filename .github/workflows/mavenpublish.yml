@@ -20,7 +20,7 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
     - name: Maven set version to snapshot
-      run: mvn -B versions:set -DnewVersion=${project.version}-SNAPSHOT
+      run: mvn -B versions:set -DnewVersion=\${project.version}-SNAPSHOT
     - name: Build with Maven
       run: mvn -B package
     - name: Publish to GitHub Packages Apache Maven
