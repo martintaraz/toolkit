@@ -1,1 +1,2 @@
-jdk: openjdk13
+jdk:
+  - openjdk13
