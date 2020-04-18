@@ -1,3 +1,4 @@
+![Maven Package](https://github.com/martintaraz/toolkit/workflows/Maven%20Package/badge.svg)
 # toolkit
 General support code for my other Java projects.
 
